@@ -27,6 +27,8 @@ namespace KazooMidiSheet
 			Logger.Log(Logger.LogLevel.Info, "读入配置文件");
 			ConfigHolder.ReadFromFile();
 			Logger.Log(Logger.LogLevel.Info, "开始加载midi");
+			float bpmMulti = ConfigHolder.ConfigData.BPM / 144f;
+			Logger.Log(Logger.LogLevel.Info, "将应用BPM乘数" + bpmMulti);
 			wasMidiLoaded = false;
 			if (!File.Exists(MidiFilePath))
 			{
@@ -58,7 +60,7 @@ namespace KazooMidiSheet
 								Logger.Log(Logger.LogLevel.Info, "确认到成对音符事件，音符值=" + midiEvent.Arg2.ToString() + "，起点=" + eventCache[midiEvent.Arg2].Time.ToString() + "，长度=" + (midiEvent.Time - eventCache[midiEvent.Arg2].Time).ToString());
 								Color color = Color.HSVToRGB(i * ConfigHolder.ConfigData.HueOffsetPerTrack, 0.75f, 1.0f);
 								color.a = ConfigHolder.ConfigData.NoteAlpha;
-								AddNewNote(color, midiEvent.Arg2, new Vector2(eventCache[midiEvent.Arg2].Time / 1000f, midiEvent.Time / 1000f));
+								AddNewNote(color, midiEvent.Arg2, new Vector2(eventCache[midiEvent.Arg2].Time / 1000f / bpmMulti, midiEvent.Time / 1000f / bpmMulti));
 								eventCache.Remove(midiEvent.Arg2);
 							}
 							break;

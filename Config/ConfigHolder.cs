@@ -29,7 +29,7 @@ namespace KazooMidiSheet.Config
 				Logger.Log(Logger.LogLevel.Error, "配置文件内容未空或读取错误");
 				return false;
 			}
-			JsonUtility.FromJsonOverwrite(configContent, ConfigData);
+			ConfigData = JsonUtility.FromJson<ConfigStruct>(configContent);
 			return true;
 		}
 
@@ -60,6 +60,7 @@ namespace KazooMidiSheet.Config
 				NoteObjPosXMulti = 38.4f,
 				NoteObjPosYAddi = 128f,
 				NoteObjLengthMulti = 3f,
+				BPM = 120f,
 			};
 			return result;
 		}

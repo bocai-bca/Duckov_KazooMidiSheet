@@ -9,5 +9,6 @@
 		public float NoteObjPosXMulti;
 		public float NoteObjPosYAddi;
 		public float NoteObjLengthMulti;
+		public float BPM;
 	}
 }
