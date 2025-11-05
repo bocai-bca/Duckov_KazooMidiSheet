@@ -1,4 +1,6 @@
-﻿# Intro
+README is outdated, please waiting to update.
+ 
+ # Intro
 
 This is a mod for video game "Escape from Duckov".  
 Please fully read this README before you use.  
