@@ -1,4 +1,4 @@
-README is outdated, please waiting to update.
+README is outdated, please waiting for update.
  
  # Intro
 
