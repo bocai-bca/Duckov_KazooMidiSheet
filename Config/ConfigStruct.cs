@@ -9,6 +9,6 @@
 		public float NoteObjPosXMulti;
 		public float NoteObjPosYAddi;
 		public float NoteObjLengthMulti;
-		public float BPM;
+		public float SpeedMulti; //速度乘数，将作为除数作用于所有音符的时间点，不可为0
 	}
 }

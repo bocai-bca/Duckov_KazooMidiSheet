@@ -60,7 +60,7 @@ namespace KazooMidiSheet.Config
 				NoteObjPosXMulti = 38.4f,
 				NoteObjPosYAddi = 128f,
 				NoteObjLengthMulti = 3f,
-				BPM = 120f,
+				SpeedMulti = 1f,
 			};
 			return result;
 		}

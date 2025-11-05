@@ -12,6 +12,7 @@ namespace KazooMidiSheet
 		public float pitch;
 		public float startTime;
 		public float endTime;
+		public float length => (endTime - startTime) / ConfigHolder.ConfigData.NoteFlowSeconds;
 		public void Update()
 		{
 			if (transform == null)
@@ -22,22 +23,19 @@ namespace KazooMidiSheet
 			float posX = (pitch + ConfigHolder.ConfigData.NoteObjPosXAddi) * ConfigHolder.ConfigData.NoteObjPosXMulti;
 			float posY = Screen.height * delta / ConfigHolder.ConfigData.NoteFlowSeconds;
 			//float posY = (Screen.height / 2f) - (Screen.height / ConfigHolder.ConfigData.NoteFlowSeconds * delta);
-			transform.localPosition = new Vector3(posX, posY + ConfigHolder.ConfigData.NoteObjPosYAddi);
+			transform.localPosition = new Vector3(posX, posY + ConfigHolder.ConfigData.NoteObjPosYAddi + length / 0.02f);
 		}
 		public NoteObject(Transform parent, Color newColor, float newPitch, Vector2 startAndEndTime)
 		{
 			transform = gameObject.AddComponent<RectTransform>();
 			transform.SetParent(parent);
-			transform.anchoredPosition = new Vector2(0f, -2f);
 			image = gameObject.AddComponent<Image>();
 			image.sprite = ModBehaviour.whiteSprite;
 			image.color = newColor;
 			pitch = newPitch;
 			startTime = startAndEndTime.x;
 			endTime = startAndEndTime.y;
-			float durationSeconds = endTime - startTime;
-			float noteLength = durationSeconds / ConfigHolder.ConfigData.NoteFlowSeconds;
-			transform.localScale = new Vector3(0.1f, noteLength * ConfigHolder.ConfigData.NoteObjLengthMulti);
+			transform.localScale = new Vector3(0.1f, length * ConfigHolder.ConfigData.NoteObjLengthMulti);
 		}
 	}
 }

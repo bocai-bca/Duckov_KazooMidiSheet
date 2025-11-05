@@ -21,14 +21,15 @@ namespace KazooMidiSheet
 		public static float timeWhenLoaded;
 		public static RectTransform? uiParent;
 		public static MidiFile? midiFile;
+		public static int BPM;
+		public static float ticksPerSecond;
 		public static List<NoteObject> noteObjects = new List<NoteObject>();
 		public static bool LoadMidi()
 		{
 			Logger.Log(Logger.LogLevel.Info, "读入配置文件");
 			ConfigHolder.ReadFromFile();
 			Logger.Log(Logger.LogLevel.Info, "开始加载midi");
-			float bpmMulti = ConfigHolder.ConfigData.BPM / 144f;
-			Logger.Log(Logger.LogLevel.Info, "将应用BPM乘数" + bpmMulti);
+			Logger.Log(Logger.LogLevel.Info, "将应用速度乘数" + ConfigHolder.ConfigData.SpeedMulti);
 			wasMidiLoaded = false;
 			if (!File.Exists(MidiFilePath))
 			{
@@ -38,29 +39,36 @@ namespace KazooMidiSheet
 			midiFile = new MidiFile(MidiFilePath);
 			if (!(midiFile.Format == 0 ||  midiFile.Format == 1))
 			{
-				Logger.Log(Logger.LogLevel.Error, "未能加载midi，只支持单、多轨道格式(0、1)");
+				Logger.Log(Logger.LogLevel.Error, "未能加载midi，只支持单、多轨道格式(0、1)，当前：" + midiFile.Format);
 				return false;
 			}
+			float ticksPerBeat = midiFile.TicksPerQuarterNote;
 			// 音符缓存，键=音高，值=音符开始事件
 			for (int i = 0; i < midiFile.TracksCount; i++)
 			{
-				Logger.Log(Logger.LogLevel.Info, "开始解析轨道：" + i.ToString());
+				Logger.Log(Logger.LogLevel.Info, "开始解析轨道：" + i);
 				Dictionary<byte, MidiEvent> eventCache = new Dictionary<byte, MidiEvent>();
 				MidiTrack this_track = midiFile.Tracks[i];
 				foreach (MidiEvent midiEvent in this_track.MidiEvents)
 				{
 					switch (midiEvent.MidiEventType) //匹配当前MIDI事件的类型
 					{
+						case MidiEventType.MetaEvent: //如果类型为元数据
+							if (midiEvent.Arg1 == (int)MetaEventType.Tempo) //如果元数据类型为Tempo
+							{
+								BPM = midiEvent.Arg2; //记录BPM
+							}
+							break;
 						case MidiEventType.NoteOn: //如果类型为音符开始
 							eventCache.TryAdd(midiEvent.Arg2, midiEvent);
 							break;
 						case MidiEventType.NoteOff: //如果类型为音符结束
 							if (eventCache.ContainsKey(midiEvent.Arg2))
 							{
-								Logger.Log(Logger.LogLevel.Info, "确认到成对音符事件，音符值=" + midiEvent.Arg2.ToString() + "，起点=" + eventCache[midiEvent.Arg2].Time.ToString() + "，长度=" + (midiEvent.Time - eventCache[midiEvent.Arg2].Time).ToString());
+								//Logger.Log(Logger.LogLevel.Info, "确认到成对音符事件，音符值=" + midiEvent.Arg2 + "，起点=" + eventCache[midiEvent.Arg2].Time + "，长度=" + (midiEvent.Time - eventCache[midiEvent.Arg2].Time));
 								Color color = Color.HSVToRGB(i * ConfigHolder.ConfigData.HueOffsetPerTrack, 0.75f, 1.0f);
 								color.a = ConfigHolder.ConfigData.NoteAlpha;
-								AddNewNote(color, midiEvent.Arg2, new Vector2(eventCache[midiEvent.Arg2].Time / 1000f / bpmMulti, midiEvent.Time / 1000f / bpmMulti));
+								AddNewNote(color, midiEvent.Arg2, new Vector2(eventCache[midiEvent.Arg2].Time / ticksPerSecond / ConfigHolder.ConfigData.SpeedMulti, midiEvent.Time / ticksPerSecond / ConfigHolder.ConfigData.SpeedMulti));
 								eventCache.Remove(midiEvent.Arg2);
 							}
 							break;
@@ -72,7 +80,8 @@ namespace KazooMidiSheet
 				}
 			}
 			timeWhenLoaded = Time.time;
-			Logger.Log(Logger.LogLevel.Info, "已加载midi，轨道数：" + midiFile.Tracks.Length + "，音符数：" + noteObjects.Count);
+			ticksPerSecond = ticksPerBeat * BPM / 60f;
+			Logger.Log(Logger.LogLevel.Info, "已加载midi，BPM：" + BPM + "，TPS：" + ticksPerSecond + "，轨道数：" + midiFile.Tracks.Length + "，总音符数：" + noteObjects.Count);
 			wasMidiLoaded = true;
 			return true;
 		}
