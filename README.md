@@ -7,7 +7,7 @@ Please fully read this README before you use.
 
 Download a release or build one with source.  
 Go to the folder `Duckov_Data/Mods` (you can create one if it doesn't exist).  
-Follow this [guide](github.com/xvrsl/duckov_modding), make a mod folder and put the dll file inside.
+Follow this [guide](https://github.com/xvrsl/duckov_modding), make a mod folder and put the dll file inside.
 
 ### How to use
 
@@ -26,4 +26,4 @@ You will encounter:
 
 # Other libraries used
 
-[midi-parser](github.com/davidluzgouveia/midi-parser) by [David Gouveia](github.com/davidluzgouveia). A good SMF \(Standard Midi File\) parser in C#
+[midi-parser](https://github.com/davidluzgouveia/midi-parser) by [David Gouveia](https://github.com/davidluzgouveia). A good SMF \(Standard Midi File\) parser in C#
