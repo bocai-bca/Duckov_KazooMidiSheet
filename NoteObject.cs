@@ -28,6 +28,7 @@ namespace KazooMidiSheet
 		{
 			transform = gameObject.AddComponent<RectTransform>();
 			transform.SetParent(parent);
+			transform.anchoredPosition = new Vector2(0f, -2f);
 			image = gameObject.AddComponent<Image>();
 			image.sprite = ModBehaviour.whiteSprite;
 			image.color = newColor;

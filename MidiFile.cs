@@ -307,21 +307,21 @@ namespace MidiParser
 
     public enum MidiEventType : byte
     {
-        NoteOff = 0x80,
+        NoteOff = 0x80, //128
 
-        NoteOn = 0x90,
+        NoteOn = 0x90, //144
 
-        KeyAfterTouch = 0xA0,
+        KeyAfterTouch = 0xA0, //160
 
-        ControlChange = 0xB0,
+        ControlChange = 0xB0, //176
 
-        ProgramChange = 0xC0,
+        ProgramChange = 0xC0, //192
 
-        ChannelAfterTouch = 0xD0,
+        ChannelAfterTouch = 0xD0, //208
 
-        PitchBendChange = 0xE0,
+        PitchBendChange = 0xE0, //224
 
-        MetaEvent = 0xFF
+        MetaEvent = 0xFF //255
     }
 
     public enum ControlChangeType : byte
@@ -350,9 +350,9 @@ namespace MidiParser
 
     public enum MetaEventType : byte
     {
-        Tempo = 0x51,
+        Tempo = 0x51, //81
 
-        TimeSignature = 0x58,
+        TimeSignature = 0x58, //88
 
         KeySignature = 0x59
     }
