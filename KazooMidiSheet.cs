@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using KazooMidiSheet.Config;
 using MidiParser;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace KazooMidiSheet
 {
@@ -36,7 +38,15 @@ namespace KazooMidiSheet
 				Logger.Log(Logger.LogLevel.Warning, "未能加载midi，不存在load.mid文件");
 				return false;
 			}
-			midiFile = new MidiFile(MidiFilePath);
+			try
+			{
+				midiFile = new MidiFile(MidiFilePath);
+			}
+			catch (Exception e)
+			{
+				Logger.Log(Logger.LogLevel.Error, "未能加载midi，解析器出错，异常：" + e.Message);
+				throw;
+			}
 			if (!(midiFile.Format == 0 ||  midiFile.Format == 1))
 			{
 				Logger.Log(Logger.LogLevel.Error, "未能加载midi，只支持单、多轨道格式(0、1)，当前：" + midiFile.Format);

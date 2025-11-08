@@ -1,6 +1,8 @@
-README is outdated, please waiting for update.
+[中文文档戳这里](docs/zh/homepage.md)
+
+Hi everyone. I'm looking for help about translation of the documents of this repository now. You can provide contributions via GitHub function or any other ways to contact to me. Thanks.
  
- # Intro
+# Intro
 
 This is a mod for video game "Escape from Duckov".  
 Please fully read this README before you use.  
@@ -16,6 +18,7 @@ Follow this [guide](https://github.com/xvrsl/duckov_modding), make a mod folder 
 Load the mod in game.  
 Go to the folder `Duckov_Data/StreamingAssets/KazooMidiSheet`.  
 You should edit something in `config.json` to you needed, like play speed, X offset etc.  
+Put a midi file named as `load.mid` there, and the mod will read the midi file and play it when you hold the kazoo.
 
 # EarlyAccess Now, Working Unstable
 
@@ -24,7 +27,7 @@ You will encounter:
 - The running speed of Midi Roller isn't matched to the BPM of the midi the playing. (But you can fix it by set the speed multiplier manually)
 - Notes' position of pitch aren't correct/precision. (But you can fix it by set the Xoffset or Xmultiplier manually)  
 - Notes' length aren't correct/precision. (Well this is a trouble yet, but you still can try to fix it by set the LengthMultiplier manually)
-- Notes' reach time aren't correct/precision. (Well this is a trouble yet too, but you also able to try to fix it by set the Yoffset manually)
+- Notes' reach time aren't correct/precision. (Well this is a trouble yet too, but you're also able to try to fix it by set the Yoffset manually)
 
 # Other libraries used
 
