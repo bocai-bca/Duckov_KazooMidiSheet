@@ -76,7 +76,7 @@ namespace KazooMidiSheet
 							if (eventCache.ContainsKey(midiEvent.Arg2))
 							{
 								//Logger.Log(Logger.LogLevel.Info, "确认到成对音符事件，音符值=" + midiEvent.Arg2 + "，起点=" + eventCache[midiEvent.Arg2].Time + "，长度=" + (midiEvent.Time - eventCache[midiEvent.Arg2].Time));
-								Color color = Color.HSVToRGB(i * ConfigHolder.ConfigData.HueOffsetPerTrack, 0.75f, 1.0f);
+								Color color = Color.HSVToRGB(i * ConfigHolder.ConfigData.HueOffsetPerTrack % 1.0f, 0.75f, 1.0f);
 								color.a = ConfigHolder.ConfigData.NoteAlpha;
 								AddNewNote(color, midiEvent.Arg2, new Vector2(eventCache[midiEvent.Arg2].Time / ticksPerSecond / ConfigHolder.ConfigData.SpeedMulti, midiEvent.Time / ticksPerSecond / ConfigHolder.ConfigData.SpeedMulti));
 								eventCache.Remove(midiEvent.Arg2);
