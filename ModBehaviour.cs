@@ -6,7 +6,7 @@ namespace KazooMidiSheet
 {
 	public class ModBehaviour : Duckov.Modding.ModBehaviour
 	{
-		public static Harmony harmony = new Harmony("KazooMidiSheet");
+		public static Harmony harmony = new Harmony("net.BCASoft.KazooMidiSheet");
 		public static Sprite whiteSprite = Sprite.Create(Texture2D.whiteTexture, new Rect(0f, 0f, 4f, 4f), new Vector2(2f, 2f));
 		public void OnEnable()
 		{
@@ -17,7 +17,7 @@ namespace KazooMidiSheet
 		public void OnDisable()
 		{
 			ConfigHolder.SaveToFile();
-			harmony.UnpatchSelf();
+			harmony.UnpatchAll("net.BCASoft.KazooMidiSheet");
 		}
 	}
 }
